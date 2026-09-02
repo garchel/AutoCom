@@ -1,0 +1,51 @@
+[build-system]
+requires = ["setuptools>=69", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "autocommiter"
+version = "0.1.0"
+description = "Windows file watcher that mirrors real file changes into a Git repository and commits them automatically."
+readme = "README.md"
+requires-python = ">=3.11"
+dependencies = ["tkinterdnd2>=0.4.3"]
+
+[project.scripts]
+autocommiter = "autocommiter.cli:main"
+
+[project.optional-dependencies]
+dev = [
+  "build>=1.2.2",
+  "mypy>=1.11.1",
+  "pytest>=8.3.2",
+  "ruff>=0.6.2",
+]
+gui = [
+  "pystray>=0.19.5",
+  "Pillow>=11.0.0",
+]
+
+[tool.setuptools]
+package-dir = {"" = "src"}
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+
+[tool.ruff]
+line-length = 100
+target-version = "py311"
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "B", "UP"]
+
+[tool.mypy]
+python_version = "3.11"
+strict = true
+packages = ["autocommiter"]
+
+[[tool.mypy.overrides]]
+module = ["pystray.*", "PIL.*"]
+ignore_missing_imports = true
